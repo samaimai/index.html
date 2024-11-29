@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmación</title>
+  <link rel="stylesheet" href="estyle.css">
+  <style>
+    .action-button {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #543020;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .action-button:hover {
+      background-color: #7a4830;
+    }
+
+    .summary {
+      margin: 20px auto;
+      padding: 15px;
+      border: 1px solid #ddd;
+      background-color: #f9f9f9;
+      width: 80%;
+      text-align: left;
+    }
+
+    .summary h3 {
+      margin-bottom: 10px;
+    }
+
+    .summary p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <center>
+    <h1>¡Gracias por tu compra!</h1>
+    <div class="container">
+      <!-- Resumen de los detalles de la compra -->
+      <div id="orderConfirmation" class="summary"></div>
+      <!-- Resumen de los productos y el total -->
+      <div id="orderSummary" class="summary"></div>
+      <p>Recibirás un correo cuando ya sea la fecha de entrega del pedido.</p>
+
+      <!-- Botones de acción -->
+      <button class="action-button" onclick="window.location.href='menu.html'">Volver a la Tienda</button>
+      <button class="action-button" onclick="window.location.href='seguir.html'">Estado de mi pedido</button>
+    </div>
+  </center>
+
+  <script>
+    // Obtener fecha y hora desde localStorage
+    const deliveryDate = localStorage.getItem("deliveryDate");
+    const deliveryTime = localStorage.getItem("deliveryTime");
+
+    if (!deliveryDate || !deliveryTime) {
+      alert("No hay datos del pedido. Regresa a la tienda.");
+      window.location.href = "menu.html";
+    }
+
+    // Mostrar confirmación de la fecha y hora de entrega
+    const confirmationDiv = document.getElementById("orderConfirmation");
+    confirmationDiv.innerHTML = `
+      <h3>Detalles de la Entrega</h3>
+      <p><strong>Fecha:</strong> ${deliveryDate}</p>
+      <p><strong>Hora:</strong> ${deliveryTime}</p>
+    `;
+
+
+      // Calcular total
+      let total = 0;
+      let resumenHTML = `<h3>Resumen del Pedido</h3><ul>`;
+      carrito.forEach((producto) => {
+        resumenHTML += `<li>${producto.nombre} - Cantidad: ${producto.cantidad} - Precio: $${producto.precio.toFixed(2)}</li>`;
+        total += producto.precio * producto.cantidad;
+      });
+      resumenHTML += `</ul><p><strong>Total a Pagar:</strong> $${total.toFixed(2)}</p>`;
+      orderSummaryDiv.innerHTML = resumenHTML;
+    
+
+
+    // Mostrar el resumen al cargar la página
+    mostrarResumen();
+  </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmación</title>
+  <link rel="stylesheet" href="estyle.css">
+  <style>
+    .action-button {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #543020;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .action-button:hover {
+      background-color: #7a4830;
+    }
+  </style>
+</head>
+<body>
+  <center>
+    <h1>¡Gracias por tu compra!</h1>
+    <div class="container">
+      <div id="orderConfirmation" class="summary"></div>
+      <p>Recibirás un correo cuando ya sea la fecha de entrega del pedido.</p>
+
+      <!-- Botones de acción -->
+      <button class="action-button" onclick="window.location.href='menu.html'">Volver a la Tienda</button>
+      <button class="action-button" onclick="window.location.href='seguir.html'">Estado de mi pedido</button>
+      <button class="action-button" onclick="continueShopping()">Seguir con mi compra</button>
+    </div>
+  </center>
+
+  <script>
+    // Obtener fecha y hora desde localStorage
+    const deliveryDate = localStorage.getItem("deliveryDate");
+    const deliveryTime = localStorage.getItem("deliveryTime");
+
+    if (!deliveryDate || !deliveryTime) {
+      alert("No hay datos del pedido. Regresa a la tienda.");
+      window.location.href = "menu.html";
+    }
+
+    // Mostrar confirmación de la fecha y hora de entrega
+    const confirmationDiv = document.getElementById("orderConfirmation");
+    confirmationDiv.innerHTML = `
+      <h3>Detalles de la Entrega</h3>
+      <p><strong>Fecha:</strong> ${deliveryDate}</p>
+      <p><strong>Hora:</strong> ${deliveryTime}</p>
+    `;
+
+    // Función para seguir con la compra manteniendo los datos del carrito
+    function continueShopping() {
+      // Recuperar el carrito desde localStorage (o inicializar si está vacío)
+      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+      // Simulación de que el carrito ya tiene productos
+      console.log("Carrito actual:", carrito);
+
+      // Guardar el carrito actualizado en localStorage (por si se modificó)
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+
+      // Redirigir al menú principal
+      window.location.href = "menu.html";
+    }
+  </script>
+</body>
+</html>

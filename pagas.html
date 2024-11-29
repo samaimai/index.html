@@ -1,0 +1,89 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panadería Marcianas - Pago</title>
+  <link rel="stylesheet" href="estyle.css">
+  
+</head>
+<body>
+  <h1>Panadería Marcianas - Detalles de Pago</h1>
+  <div class="container">
+    <form id="paymentForm" action="entregas.html" method="POST">
+      <h2>Información del Cliente</h2>
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+      </div>
+      <div class="form-group">
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" required>
+      </div>
+      <div class="form-group">
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" required>
+      </div>
+      <div class="form-group">
+        <label for="domicilio">Domicilio:</label>
+        <input type="text" id="domicilio" name="domicilio" required>
+      </div>
+      <div class="form-group">
+        <label for="codigoPostal">Código Postal:</label>
+        <input type="text" id="codigoPostal" name="codigoPostal" required>
+      </div>
+      <div class="form-group">
+        <label for="colonia">Colonia:</label>
+        <input type="text" id="colonia" name="colonia" required>
+      </div>
+      <div class="form-group">
+        <label for="calle">Calle:</label>
+        <input type="text" id="calle" name="calle" required>
+      </div>
+
+      <h2>Detalles de Pago</h2>
+      <div class="form-group">
+        <label for="titular">Titular de la Tarjeta:</label>
+        <input type="text" id="titular" name="titular" required>
+      </div>
+      <div class="form-group">
+        <label for="cvv">CVV:</label>
+        <input type="password" id="cvv" name="cvv" maxlength="3" required>
+      </div>
+      <div class="form-group">
+        <label for="monto">Monto Total:</label>
+        <input type="text" id="monto" name="monto" readonly>
+      </div>
+
+      <input type="hidden" id="orderDetails" name="orderDetails">
+
+      <button type="submit" class="purchase-button">Proceder a Entrega</button>
+    </form>
+  </div>
+
+  <script>
+    // Recupera los detalles de la orden desde localStorage
+    const orderDetails = JSON.parse(localStorage.getItem('orderDetails'));
+
+    if (!orderDetails) {
+      alert('No hay detalles de la compra. Regresa al carrito.');
+      window.location.href = 'menu.html'; // Redirigir al carrito si no hay detalles
+    } else {
+      // Mostrar el monto total y detalles de la orden
+      document.getElementById('monto').value = $${orderDetails.total.toFixed(2)};
+      document.getElementById('orderDetails').value = JSON.stringify(orderDetails);
+    }
+
+    // Validación opcional adicional antes de enviar el formulario
+    document.getElementById('paymentForm').addEventListener('submit', function(event) {
+      const nombre = document.getElementById('nombre').value.trim();
+      const apellido = document.getElementById('apellido').value.trim();
+
+      if (!nombre || !apellido) {
+        event.preventDefault();
+        alert('Por favor, completa todos los campos requeridos.');
+      }
+    });
+  </script>
+</body>
+</html>
